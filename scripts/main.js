@@ -9,22 +9,25 @@ function handleError(fn) {
 }
 
 async function getLocation(loc) {
-    try {
         let weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${loc}&APPID=f5f4bd1498286db5b5db05d4cd17112c&units=imperial`, {mode: 'cors'});
-        getWeather(weather);
-    } catch (err) {
-        console.log(err);
-    }
+        handleError(getWeather(weather));
 }
 
 async function getWeather(loc) {
-    try {
         let response = await loc.json();
+        let name = response.name;
+        let overcast = response.weather[0].description;
+        let temp = roundOneDeci(response.main.temp);
+        let tempMax = roundOneDeci(response.main.temp_max);
+        let tempMin = roundOneDeci(response.main.temp_min);
+        
+        console.log(name);
+        console.log(overcast);
+        console.log(temp, tempMax, tempMin);
+}
 
-        console.log(response.main, response.weather, response.name);
-    } catch (err) {
-        console.log(err);
-    }
+function roundOneDeci(temp) {
+    return Math.round(temp * 10) / 10;
 }
 
 function createWeatherDisplay() {
@@ -65,7 +68,7 @@ function weatherSubmit() {
     formSubmit.addEventListener("click", (e) => {
         let search = formSearch.value;
         e.preventDefault();
-        search.length > 2 ? getLocation(search) : null;
+        search.length > 2 ? handleError(getLocation(search)) : null;
     });
 }
 
