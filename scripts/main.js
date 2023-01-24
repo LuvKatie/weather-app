@@ -1,3 +1,13 @@
+// const handleError = fn => (...params) => fn(...params).catch(console.error);
+
+function handleError(fn) {
+    return function(...params) {
+        return fn(...params).catch(function (err) {
+            console.error('Oops!', err);
+        });
+    }
+}
+
 async function getLocation(loc) {
     try {
         let weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${loc}&APPID=f5f4bd1498286db5b5db05d4cd17112c&units=imperial`, {mode: 'cors'});
@@ -51,9 +61,14 @@ function createForm() {
 
 function weatherSubmit() {
     const formSubmit = document.getElementById("weather-submit");
-
+    const formSearch = document.getElementById("weather-search");
+    formSubmit.addEventListener("click", (e) => {
+        let search = formSearch.value;
+        e.preventDefault();
+        search.length > 2 ? getLocation(search) : null;
+    });
 }
 
-getLocation("London");
 createWeatherDisplay();
 createForm();
+weatherSubmit();

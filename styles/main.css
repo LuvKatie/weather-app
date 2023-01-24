@@ -42,6 +42,11 @@ body {
     height: 25px;
 }
 
+#weather-submit:hover {
+    background-color: rgb(212, 212, 212);
+    cursor: pointer;
+}
+
 #weather-display {
     background-color: burlywood;
     width: 400px;
