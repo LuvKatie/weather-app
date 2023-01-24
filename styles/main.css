@@ -1,0 +1,49 @@
+body {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+#weather-form {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    width: 400px;
+    height: 100px;
+}
+
+#weather-search {
+    font-size: 15px;
+    width: 200px;
+    height: 20px;
+}
+
+#weather-search:focus {
+    outline: none;
+}
+
+#weather-submit {
+    font-size: 15px;
+    font-weight: 600;
+
+    border-radius: 6px;
+    border: none;
+
+    box-shadow: 0 0 10px 4px rgba(209, 209, 209, 0.4);
+    background-color: white;
+
+    width: 120px;
+    height: 25px;
+}
+
+#weather-display {
+    background-color: burlywood;
+    width: 400px;
+    height: 500px;
+}

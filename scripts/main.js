@@ -17,4 +17,43 @@ async function getWeather(loc) {
     }
 }
 
+function createWeatherDisplay() {
+    const body = document.querySelector("body");
+    const container = document.createElement("div");
+
+    container.id = "weather-display"
+
+    body.appendChild(container);
+}
+
+function createForm() {
+    const body = document.querySelector("body");
+    const form = document.createElement("form");
+    const formLabel = document.createElement("label");
+    const formInput = document.createElement("input");
+    const formSubmit = document.createElement("button");
+
+    formInput.setAttribute('type', 'text');
+    formInput.setAttribute('name', 'weather-search');
+    formLabel.setAttribute('for', 'weather-search');
+
+    formSubmit.textContent = "Get Weather";
+
+
+    form.id = "weather-form";
+    formInput.id = "weather-search";
+    formSubmit.id = "weather-submit";
+    
+    formLabel.appendChild(formInput)
+    form.append(formLabel, formSubmit);
+    body.appendChild(form);
+}
+
+function weatherSubmit() {
+    const formSubmit = document.getElementById("weather-submit");
+
+}
+
 getLocation("London");
+createWeatherDisplay();
+createForm();
