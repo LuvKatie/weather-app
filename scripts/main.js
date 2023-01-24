@@ -20,7 +20,7 @@ async function getWeather(loc) {
         let temp = roundOneDeci(response.main.temp);
         let tempMax = roundOneDeci(response.main.temp_max);
         let tempMin = roundOneDeci(response.main.temp_min);
-        
+
         console.log(name);
         console.log(overcast);
         console.log(temp, tempMax, tempMin);
