@@ -8,13 +8,12 @@ function handleError(fn) {
     }
 }
 
-async function getLocation(loc) {
-        let weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${loc}&APPID=f5f4bd1498286db5b5db05d4cd17112c&units=imperial`, {mode: 'cors'});
-        handleError(getWeather(weather));
-}
 
 async function getWeather(loc) {
-        let response = await loc.json();
+        let weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${loc}&APPID=f5f4bd1498286db5b5db05d4cd17112c&units=imperial`, {mode: 'cors'});
+        let response = await weather.json();
+
+
         let name = response.name;
         let overcast = response.weather[0].description;
         let temp = roundNearest(response.main.temp);
@@ -26,6 +25,36 @@ async function getWeather(loc) {
         console.log(name);
         console.log(capitalizeFirst(overcast));
         console.log(`Now: ${temp}, High ${tempMax}, Low: ${tempMin}, Wind: ${windSpd} mph`);
+
+        return {
+            name,
+            overcast,
+            temp,
+            tempMax,
+            tempMin,
+            windSpd
+        }
+};
+
+function populateWeatherDisplay(weatherData) {
+        const name = document.querySelector("#city-name");
+        const currTemp = document.querySelector(".currtemp");
+        const overcastSel = document.querySelector(".overcast");
+        const dayHigh = document.querySelector(".dayhigh");
+        const dayLow = document.querySelector(".daylow");
+        const windSpd = document.querySelector(".windspeed");
+
+        name.textContent = weatherData.name;
+        currTemp.textContent = weatherData.temp;
+        overcastSel.textContent = weatherData.overcast;
+        dayHigh.textContent = weatherData.tempMax;
+        dayLow.textContent = weatherData.tempMin;
+        windSpd.textContent = weatherData.windSpd;
+}
+
+const getAndUpdate = async (loc) => {
+    let resp = await getWeather(loc);
+    populateWeatherDisplay(resp);
 }
 
 function roundNearest(temp) {
@@ -43,18 +72,39 @@ function capitalizeFirst(str) {
     return newStr;
 }
 
+
 function createWeatherDisplay() {
     const body = document.querySelector("body");
+
     const container = document.createElement("div");
     const cityName = document.createElement("header");
 
     const currTempContainer = document.createElement("div");
     const currTemp = document.createElement("p");
+
     const miscInfo = document.createElement("div");
+    const overcast = document.createElement("p");
+    const dayHigh = document.createElement("p");
+    const dayLow = document.createElement("p");
+    const windSpd = document.createElement("p");
+
 
     container.id = "weather-display"
+    currTempContainer.id = "currtemp-display";
+    miscInfo.id = "misc-display";
+    cityName.id = "city-name"
+
+    currTemp.className = "currtemp";
+    overcast.className = "overcast";
+    dayHigh.className = "dayhigh";
+    dayLow.className = "daylow";
+    windSpd.className = "windspeed";
+
 
     body.appendChild(container);
+    container.append(cityName, currTempContainer, miscInfo);
+    currTempContainer.appendChild(currTemp);
+    miscInfo.append(overcast, dayHigh, dayLow, windSpd);
 }
 
 function createForm() {
@@ -86,7 +136,7 @@ function weatherSubmit() {
     formSubmit.addEventListener("click", (e) => {
         let search = formSearch.value;
         e.preventDefault();
-        search.length > 2 ? handleError(getLocation(search)) : null;
+        search.length > 2 ? handleError(getAndUpdate(search)) : null;
     });
 }
 
