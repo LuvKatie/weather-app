@@ -15,7 +15,7 @@ async function getWeather(loc) {
 
 
         let name = response.name;
-        let overcast = response.weather[0].description;
+        let overcast = capitalizeFirst(response.weather[0].description);
         let temp = roundNearest(response.main.temp);
         let tempMax = roundNearest(response.main.temp_max);
         let tempMin = roundNearest(response.main.temp_min);
@@ -23,7 +23,7 @@ async function getWeather(loc) {
 
         console.log(response);
         console.log(name);
-        console.log(capitalizeFirst(overcast));
+        console.log(overcast);
         console.log(`Now: ${temp}, High ${tempMax}, Low: ${tempMin}, Wind: ${windSpd} mph`);
 
         return {
@@ -34,22 +34,22 @@ async function getWeather(loc) {
             tempMin,
             windSpd
         }
-};
+}
 
 function populateWeatherDisplay(weatherData) {
-        const name = document.querySelector("#city-name");
+        const name = document.querySelector("#city-name > p");
         const currTemp = document.querySelector(".currtemp");
         const overcastSel = document.querySelector(".overcast");
         const dayHigh = document.querySelector(".dayhigh");
         const dayLow = document.querySelector(".daylow");
         const windSpd = document.querySelector(".windspeed");
 
-        name.textContent = weatherData.name;
-        currTemp.textContent = weatherData.temp;
-        overcastSel.textContent = weatherData.overcast;
-        dayHigh.textContent = weatherData.tempMax;
-        dayLow.textContent = weatherData.tempMin;
-        windSpd.textContent = weatherData.windSpd;
+        name.textContent = "City: " + weatherData.name;
+        currTemp.textContent = "Currently: " + weatherData.temp;
+        overcastSel.textContent = "Overcast: " + weatherData.overcast;
+        dayHigh.textContent = "Today's high: " + weatherData.tempMax;
+        dayLow.textContent = "Today's low: " + weatherData.tempMin;
+        windSpd.textContent = "Wind Speeds: " + weatherData.windSpd + "mph";
 }
 
 const getAndUpdate = async (loc) => {
@@ -72,12 +72,12 @@ function capitalizeFirst(str) {
     return newStr;
 }
 
-
 function createWeatherDisplay() {
     const body = document.querySelector("body");
 
     const container = document.createElement("div");
     const cityName = document.createElement("header");
+    const namePara = document.createElement("p");
 
     const currTempContainer = document.createElement("div");
     const currTemp = document.createElement("p");
@@ -103,6 +103,7 @@ function createWeatherDisplay() {
 
     body.appendChild(container);
     container.append(cityName, currTempContainer, miscInfo);
+    cityName.appendChild(namePara);
     currTempContainer.appendChild(currTemp);
     miscInfo.append(overcast, dayHigh, dayLow, windSpd);
 }

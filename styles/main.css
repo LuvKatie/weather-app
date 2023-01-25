@@ -68,6 +68,9 @@ body {
     align-self: center;
     justify-self: center;
 
+    text-align: center;
+    vertical-align: middle;
+
     border: 1px solid black;
 
     width: 90%;
@@ -76,13 +79,22 @@ body {
 
 #currtemp-display {
     display: flex;
-    
+    justify-content: center;
+
     grid-row: 2 / 3;
     grid-column: 1 / 2;
     border: 1px solid black;
 }
 
+.currtemp {
+
+}
+
 #misc-display {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     border: 1px solid black;
