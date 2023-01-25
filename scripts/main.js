@@ -17,22 +17,40 @@ async function getWeather(loc) {
         let response = await loc.json();
         let name = response.name;
         let overcast = response.weather[0].description;
-        let temp = roundOneDeci(response.main.temp);
-        let tempMax = roundOneDeci(response.main.temp_max);
-        let tempMin = roundOneDeci(response.main.temp_min);
+        let temp = roundNearest(response.main.temp);
+        let tempMax = roundNearest(response.main.temp_max);
+        let tempMin = roundNearest(response.main.temp_min);
+        let windSpd = roundNearest(response.wind.speed);
 
+        console.log(response);
         console.log(name);
-        console.log(overcast);
-        console.log(temp, tempMax, tempMin);
+        console.log(capitalizeFirst(overcast));
+        console.log(`Now: ${temp}, High ${tempMax}, Low: ${tempMin}, Wind: ${windSpd} mph`);
 }
 
-function roundOneDeci(temp) {
-    return Math.round(temp * 10) / 10;
+function roundNearest(temp) {
+    return Math.round(temp);
+}
+
+function capitalizeFirst(str) {
+    let overcast = str.split(" ");
+    let newStr = "";
+    for (const word of overcast) {
+        let first = word.slice(0, 1);
+        let afterFirst = word.slice(1);
+        newStr += first.toUpperCase() + afterFirst + " ";
+    }
+    return newStr;
 }
 
 function createWeatherDisplay() {
     const body = document.querySelector("body");
     const container = document.createElement("div");
+    const cityName = document.createElement("header");
+
+    const currTempContainer = document.createElement("div");
+    const currTemp = document.createElement("p");
+    const miscInfo = document.createElement("div");
 
     container.id = "weather-display"
 
