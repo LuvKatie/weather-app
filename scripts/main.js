@@ -44,12 +44,12 @@ function populateWeatherDisplay(weatherData) {
         const dayLow = document.querySelector(".daylow");
         const windSpd = document.querySelector(".windspeed");
 
-        name.textContent = "City: " + weatherData.name;
-        currTemp.textContent = "Currently: " + weatherData.temp;
-        overcastSel.textContent = "Overcast: " + weatherData.overcast;
-        dayHigh.textContent = "Today's high: " + weatherData.tempMax;
-        dayLow.textContent = "Today's low: " + weatherData.tempMin;
-        windSpd.textContent = "Wind Speeds: " + weatherData.windSpd + "mph";
+        name.textContent = weatherData.name;
+        currTemp.textContent = "Currently" + "\r\n" + weatherData.temp + " F";
+        overcastSel.textContent = weatherData.overcast;
+        dayHigh.textContent = "Day high" + "\r\n" + weatherData.tempMax + " F";
+        dayLow.textContent = "Day low" + "\r\n" + weatherData.tempMin + " F";
+        windSpd.textContent = "Wind Speeds" + "\r\n" + weatherData.windSpd + "mph";
 }
 
 const getAndUpdate = async (loc) => {

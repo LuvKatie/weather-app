@@ -61,6 +61,11 @@ body {
     height: 500px;
 }
 
+#weather-display p {
+    white-space: pre;
+    color: darkslategray;
+}
+
 #city-name { 
     grid-row: 1 / 2;
     grid-column: 1 / -1;
@@ -71,23 +76,31 @@ body {
     text-align: center;
     vertical-align: middle;
 
-    border: 1px solid black;
-
     width: 90%;
     height: 50%;
+}
+
+#city-name > p {
+    font-size: 36px;
+    margin: 0;
+    font-weight: 600;
+    color: white;
 }
 
 #currtemp-display {
     display: flex;
     justify-content: center;
+    align-items: center;
 
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    border: 1px solid black;
 }
 
 .currtemp {
-
+    display: flex;
+    height: 150px;
+    font-size: 24px;
+    margin: 0;
 }
 
 #misc-display {
@@ -97,5 +110,12 @@ body {
 
     grid-row: 2 / 3;
     grid-column: 2 / 3;
-    border: 1px solid black;
+}
+
+#misc-display p {
+    display: flex;
+    align-items: center;
+    width: 120px;
+    height: 100%;
+    margin: 0;
 }
